@@ -11,8 +11,9 @@
 
 package eidolon.chroma
 
-import eidolon.chroma.io.AnsiStyles
+import eidolon.chroma.io.{AnsiStyles, StandardAnsiStyles}
 
+import scala.collection.immutable.Queue
 import scala.language.dynamics
 
 /**
@@ -20,7 +21,7 @@ import scala.language.dynamics
  *
  * @author Elliot Wright <elliot@elliotwright.co>
  */
-class Chroma(styles: AnsiStyles, queue: List[String] = List()) extends Dynamic {
+class Chroma(styles: AnsiStyles, queue: Queue[String] = Queue()) extends Dynamic {
     /**
      * Queue up more styles
      *
@@ -59,6 +60,6 @@ class Chroma(styles: AnsiStyles, queue: List[String] = List()) extends Dynamic {
  */
 object Chroma {
     def apply(): Chroma = {
-        new Chroma(new AnsiStyles())
+        new Chroma(new StandardAnsiStyles())
     }
 }

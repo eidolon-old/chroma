@@ -12,16 +12,9 @@
 package eidolon.chroma.io
 
 /**
- * AnsiStyles
+ * Data storage object for a style
  *
- * @author Elliot Wright <elliot@elliotwright.co>
+ * @param open Opening style string
+ * @param close Closing style string
  */
-trait AnsiStyles {
-    /**
-     * Get a style by it's name
-     *
-     * @param name Name of style
-     * @return The style
-     */
-    def getStyle(name: String): AnsiStyle
-}
+case class AnsiStyle(open: String, close: String)
