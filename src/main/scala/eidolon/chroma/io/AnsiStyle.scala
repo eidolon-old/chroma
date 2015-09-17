@@ -17,4 +17,14 @@ package eidolon.chroma.io
  * @param open Opening style string
  * @param close Closing style string
  */
-case class AnsiStyle(open: String, close: String)
+case class AnsiStyle(open: String, close: String) {
+    /**
+     * Apply this style to the given input
+     *
+     * @param input The unstyled input
+     * @return The styled output
+     */
+    def applyStyle(input: String): String = {
+        open + input + close
+    }
+}

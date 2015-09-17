@@ -40,16 +40,12 @@ class Chroma(styles: AnsiStyles, queue: Queue[String] = Queue()) extends Dynamic
      * @return The styled input (if possible)
      */
     def applyDynamic(name: String)(args: String*): String = {
-        val res = queue :+ name
-        var str = args.mkString(" ")
+        val pending = queue :+ name
+        val input = args.mkString(" ")
 
-        res.foreach((style: String) => {
-            val code = styles.getStyle(style)
-
-            str = code.open + str + code.close
+        pending.foldLeft(input)((res: String, style: String) => {
+            styles.getStyle(style).applyStyle(res)
         })
-
-        str
     }
 }
 
