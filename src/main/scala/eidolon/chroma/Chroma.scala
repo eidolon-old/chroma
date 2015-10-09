@@ -12,7 +12,6 @@
 package eidolon.chroma
 
 import eidolon.chroma.io.{AnsiStyles, StandardAnsiStyles}
-
 import scala.collection.immutable.Queue
 import scala.language.dynamics
 

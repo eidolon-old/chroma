@@ -23,8 +23,14 @@ object Build extends BaseBuild {
 
     lazy val commonSettings = Seq(
         organization := "eidolon.chroma",
-        version := "0.1.0-SNAPSHOT",
+        publishMavenStyle := true,
+        publishTo := Some(Resolver.sftp(
+            "Eidolon Repo",
+            "maven.eidolonframework.com",
+            "/usr/share/nginx/html"
+        )),
         scalaVersion := "2.11.7",
+        version := "1.0.0",
         testOptions in Test += Tests.Argument("-oD")
     )
 
