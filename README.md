@@ -28,10 +28,10 @@ println(chroma.blue("Hello world!"))
 println(chroma.blue("Hello") + " world" + chroma.red("!"))
 
 // Compose multiple styles using the chainable API
-println(chroma.white.bgMagenta.bold("Hello world!")
+println(chroma.white.bgMagenta.bold("Hello world!"))
 
 // Pass in multiple arguments
-println(chroma.blue("Hello", "world", "!")
+println(chroma.blue("Hello", "world", "!"))
 
 // Nest styles
 println(chroma.red("Hello", chroma.underline.bgBlue("world") + "!"))
