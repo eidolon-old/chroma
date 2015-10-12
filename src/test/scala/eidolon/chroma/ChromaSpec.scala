@@ -26,8 +26,9 @@ class ChromaSpec extends FunSpec with BeforeAndAfter {
     before {
         val styles = mock(classOf[AnsiStyles])
 
-        when(styles.getStyle("test")).thenReturn(new AnsiStyle("<start>", "<end>"))
-        when(styles.getStyle("test2")).thenReturn(new AnsiStyle("<start2>", "<end2>"))
+        when(styles.getStyle("test1")).thenReturn(new AnsiStyle(1, 10))
+        when(styles.getStyle("test2")).thenReturn(new AnsiStyle(1, 20))
+        when(styles.getStyle("test3")).thenReturn(new AnsiStyle(2, 20))
 
         chroma = new Chroma(styles)
     }
@@ -39,7 +40,7 @@ class ChromaSpec extends FunSpec with BeforeAndAfter {
 
         describe("selectDynamic()") {
             it("return a new Chroma instance") {
-                val result = chroma.selectDynamic("test")
+                val result = chroma.selectDynamic("test1")
 
                 assert(result.isInstanceOf[Chroma])
                 assert(result != chroma)
@@ -48,22 +49,30 @@ class ChromaSpec extends FunSpec with BeforeAndAfter {
 
         describe("applyDynamic()") {
             it("return a string") {
-                val result = chroma.applyDynamic("test")("Hello world!")
+                val result = chroma.applyDynamic("test1")("Hello world!")
 
                 assert(result.isInstanceOf[String])
             }
 
             it("should apply the styles to the input") {
-                val result = chroma.applyDynamic("test")("Hello world!")
-                val expected = "<start>Hello world!<end>"
+                val result = chroma.applyDynamic("test1")("Hello world!")
+                val expected = "\u001b[1mHello world!\u001b[10m"
 
                 assert(result == expected)
             }
 
             it("should be able to apply multiple styles to a given input") {
-                val broker = chroma.applyDynamic("test")("Hello world!")
+                val broker = chroma.applyDynamic("test1")("Hello world!")
                 val result = chroma.applyDynamic("test2")(broker)
-                val expected = "<start2><start>Hello world!<end><end2>"
+                val expected = "\u001b[1m\u001b[1mHello world!\u001b[10m\u001b[20m"
+
+                assert(result == expected)
+            }
+
+            it("should be able to apply several of the same kinds of styles to the same input") {
+                val inner = chroma.applyDynamic("test2")("world")
+                val result = chroma.applyDynamic("test3")("Hello " + inner + "!")
+                val expected = "\u001b[2mHello \u001b[1mworld\u001b[2m!\u001b[20m"
 
                 assert(result == expected)
             }

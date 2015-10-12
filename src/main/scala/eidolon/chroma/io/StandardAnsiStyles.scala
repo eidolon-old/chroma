@@ -63,8 +63,8 @@ final class StandardAnsiStyles extends AnsiStyles {
         }
 
         new AnsiStyle(
-            "\u001b[" + styles(name).head + "m",
-            "\u001b[" + styles(name).last + "m"
+            styles(name).head,
+            styles(name).last
         )
     }
 }

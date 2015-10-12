@@ -17,7 +17,10 @@ package eidolon.chroma.io
  * @param open Opening style string
  * @param close Closing style string
  */
-case class AnsiStyle(open: String, close: String) {
+case class AnsiStyle(open: Int, close: Int) {
+    private val openSeq = s"\u001b[${open}m"
+    private val closeSeq = s"\u001b[${close}m"
+
     /**
      * Apply this style to the given input
      *
@@ -25,6 +28,6 @@ case class AnsiStyle(open: String, close: String) {
      * @return The styled output
      */
     def applyStyle(input: String): String = {
-        open + input + close
+        openSeq + input.replaceAllLiterally(closeSeq, openSeq) + closeSeq
     }
 }

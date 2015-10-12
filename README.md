@@ -35,6 +35,13 @@ println(chroma.blue("Hello", "world", "!")
 
 // Nest styles
 println(chroma.red("Hello", chroma.underline.bgBlue("world") + "!"))
+
+// Nest styles of the same type even (colour, underline, background)
+println(chroma.green(
+    "I am a green line " +
+    chroma.blue.underline.bold("with a blue substring") +
+    " that becomes green again!"
+))
 ```
 
 
