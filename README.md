@@ -1,4 +1,4 @@
-# Chroma [![Build Status](https://api.travis-ci.org/eidolon/chroma.svg)](https://travis-ci.org/eidolon/chroma)
+# Chroma
 
 Chroma is a Scala console colours library, based on the Node [Chalk library][1]. Chroma is designed
 to be ridiculously simple, lightweight, and easy to use.

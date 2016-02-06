@@ -1,5 +1,5 @@
 /**
- * This file is part of the "chroma" project.
+ * This file is part of the "eidolon/chroma" project.
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the LICENSE is distributed on an "AS IS" BASIS,
@@ -19,28 +19,31 @@ import sbt.{Build => BaseBuild, _}
  * @author Elliot Wright <elliot@elliotwright.co>
  */
 object Build extends BaseBuild {
-    import Dependencies._
 
-    lazy val commonSettings = Seq(
-        organization := "eidolon",
-        publishMavenStyle := true,
-        publishTo := Some(Resolver.sftp(
-            "Eidolon Repo",
-            "ssh.repo.eidolonframework.com",
-            "/usr/share/nginx/html"
-        )),
-        scalaVersion := "2.11.7",
-        version := "1.0.0",
-        testOptions in Test += Tests.Argument("-oD")
+  import Dependencies._
+
+  val `project-version` = taskKey[Unit]("Print the current version")
+  val projectVersion = "1.0.0"
+
+  lazy val commonSettings = Seq(
+    organization := "eidolon",
+    publishMavenStyle := true,
+    publishTo := Some(Resolver.file("release", new File("./release"))),
+    scalaVersion := "2.11.7",
+    version := projectVersion,
+    testOptions in Test += Tests.Argument("-oD")
+  )
+
+  lazy val chroma = (project in file("."))
+    .enablePlugins(JavaAppPackaging)
+    .enablePlugins(JavaServerAppPackaging)
+    .settings(commonSettings: _*)
+    .settings(name := "chroma")
+    .settings(`project-version` := {
+      println(projectVersion)
+    })
+    .settings(libraryDependencies ++=
+      test(mockito, scalaTest)
     )
-
-    lazy val chroma = (project in file("."))
-        .enablePlugins(JavaAppPackaging)
-        .enablePlugins(JavaServerAppPackaging)
-        .settings(commonSettings: _*)
-        .settings(name := "chroma")
-        .settings(libraryDependencies ++=
-            test(mockito, scalaTest)
-        )
 }
 
